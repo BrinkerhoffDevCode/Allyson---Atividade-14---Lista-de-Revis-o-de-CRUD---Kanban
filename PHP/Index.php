@@ -1,84 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Meta tags Obrigatórias -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <title>Cadastro</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Cadastro</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="index.php">Home <span class="sr-only">(Página atual)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="novo-usuario.php">Novo Usuário</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="listar-usuario.php">Listar Usuário</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 <?php
-
-//faz a conexao
-include "db.php";
-//inicia a sessao
-session_start();
-
-//logout
-if(isset($_GET['logout'])){
-    session_destroy();
-    header("Location: index.php");
-    exit;
-}
-
-$msg = "";
-if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $user = $_POST["username"] ?? "";
-    $pass = $_POST["senha"] ?? "";
-
-    $stmt =$mysqli->prepare("SELECT pk, username, senha FROM usuarios WHERE username=? AND senha=?");
-    $stmt-> bind_param("ss", $user, $pass);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-    $dados = $result -> fetch_assoc();
-    $stmt->close();
-
-    if($dados){
-        $_SESSION["user_pk"] = $dados["pk"];
-        $_SESSION["username"] = $dados["username"];
-        header("Location: index.php");
-        exit;
-
-    }else{
-        $msg = "Usuário ou senha incorretos!";
+    switch(@$_REQUEST["page"]){
+        case "novo":
+            include("novo-usuario.php")
     }
-};
-
 ?>
 
+    <script src="js/bootstrap.bundle.min.js"></script>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Simples</title>
-</head>
-<body>
-
-<?php if(!empty($_SESSION["user_pk"])): ?>
-
-    <div>
-        <h3>Bem-vindo, <?= $_SESSION["username"] ?>!</h3>
-        <p>Sessão Ativa</p>
-        <form action="cadastro.php" method="get">
-            <button type="submit">Cadastrar novos usuários.</button>
-        </form>
-        <p><a href="?logout=1">Sair</a></p>
-    </div>
-
-<?php else: ?>
-
-    <div>
-        <h3>Login</h3>
-        <form method="POST">
-
-            <?php if($msg): ?> 
-                <p> <?= $msg ?> </p> 
-            <?php endif; ?>
-
-            <input type="text" name="username" placeholder="Usuário" required>
-            <br>
-            <br>
-            <input type="password" name="senha" placeholder="Senha" required>
-            <br>
-            <br>
-            <button type="submit">Entrar</button>
-            <p><small>Dica: admin / 123</small></p>
-        </form>
-    </div>
-
-<?php endif; ?> 
-</body>
+    
+  </body>
 </html>
