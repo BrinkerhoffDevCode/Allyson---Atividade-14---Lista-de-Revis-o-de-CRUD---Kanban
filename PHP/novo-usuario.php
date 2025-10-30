@@ -11,3 +11,4 @@
 </form>
 
 <!-- Video: Como fazer CRUD com PHP e MySQL , Professor Eliel (Possui erros no codigo) --!>
+ <!-- Parei em 20:14 --!>
