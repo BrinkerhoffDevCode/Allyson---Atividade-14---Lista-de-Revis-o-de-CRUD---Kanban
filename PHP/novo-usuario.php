@@ -46,4 +46,6 @@
 </form>
 
 <!-- Video: Como fazer CRUD com PHP e MySQL , Professor Eliel (Possui erros no codigo) --!>
- <!-- Parei em 20:37 --!>
+ <!-- Parei em 33:57 --!>
+
+ <!--AQUI 33:57 --!>
